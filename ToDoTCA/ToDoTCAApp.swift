@@ -6,25 +6,18 @@
 //
 
 import SwiftUI
-import SwiftData
+import ComposableArchitecture
 
 @main
 struct ToDoTCAApp: App {
     
-    let container: ModelContainer
-    
-    init() {
-        do {
-            container = try ModelContainer(for: Todo.self)
-        } catch {
-            fatalError("Failed to initialize SwiftData container: \(error)")
-        }
-    }
-    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .modelContainer(container)
+            ContentView(
+                store: Store(initialState: Todos.State(todos: .mock)) {
+                  Todos()
+                }
+              )
         }
     }
 }
